@@ -12,6 +12,10 @@ A library that generates an interactive radar, inspired by [thoughtworks.com/rad
 
 You can see this in action at https://radar.thoughtworks.com. If you plug in [this data](https://docs.google.com/spreadsheets/d/1GBX3-jzlGkiKpYHF9RvVtu6GxSrco5OYTBv9YsOTXVg/edit#gid=0) you'll see [this visualization](https://radar.thoughtworks.com/?sheetId=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1GBX3-jzlGkiKpYHF9RvVtu6GxSrco5OYTBv9YsOTXVg%2Fedit%23gid%3D0).
 
+## Disclaimer
+
+The fourth ring name has been changed from **Hold** to **Caution**. Data using the ring value "hold" (any case) in your sheet, CSV, or JSON is still accepted and displayed as **Caution**.
+
 ## How To Use
 
 The easiest way to use the app out of the box is to provide a _public_ Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field and your radar will be generated once you click the submit button. The data must conform to the format below for the radar to be generated correctly.
@@ -27,7 +31,7 @@ Create a Google Sheet. Give it at least the below column headers, and put in the
 | Composer      | adopt  | tools                  | TRUE  | Although the idea of dependency management ...          |
 | Canary builds | trial  | techniques             | FALSE | Many projects have external code dependencies ...       |
 | Apache Kylin  | assess | platforms              | TRUE  | Apache Kylin is an open source analytics solution ...   |
-| JSF           | hold   | languages & frameworks | FALSE | We continue to see teams run into trouble using JSF ... |
+| JSF           | Caution   | languages & frameworks | FALSE | We continue to see teams run into trouble using JSF ... |
 
 ### Want to show blip movement information?
 
@@ -66,7 +70,7 @@ name,ring,quadrant,isNew,description
 Composer,adopt,tools,TRUE,"Although the idea of dependency management ..."
 Canary builds,trial,techniques,FALSE,"Many projects have external code dependencies ..."
 Apache Kylin,assess,platforms,TRUE,"Apache Kylin is an open source analytics solution ..."
-JSF,hold,languages & frameworks,FALSE,"We continue to see teams run into trouble using JSF ..."
+JSF,Caution,languages & frameworks,FALSE,"We continue to see teams run into trouble using JSF ..."
 ```
 
 If you do not want to host the CSV file publicly, you can follow [these steps](#advanced-option---docker-image-with-a-csvjson-file-from-the-host-machine) to host the file locally on your BYOR docker instance itself.
@@ -107,7 +111,7 @@ An example:
   },
   {
     "name": "JSF",
-    "ring": "hold",
+    "ring": "Caution",
     "quadrant": "languages & frameworks",
     "isNew": "FALSE",
     "description": "We continue to see teams run into trouble using JSF ..."
@@ -170,6 +174,10 @@ To specify custom ring and/or quadrant names, add the following environment vari
 export RINGS='["Adopt", "Trial", "Assess", "Hold"]'
 export QUADRANTS='["Techniques", "Platforms", "Tools", "Languages & Frameworks"]'
 ```
+
+### Hold to Caution ring normalization (feature toggle)
+
+If you host Build Your Own Radar and use Thoughtworks-defined ring names (Adopt, Trial, Assess, Caution), you can still allow your website users to upload sheets, CSV, or JSON where the ring value is **hold** (any case). The app will normalize **hold** to **Caution** when the feature toggle **normalizeRingNameHoldToCaution** is enabled (it is enabled by default). To disable this behavior so that only the exact ring name "Caution" is accepted, set the toggle to `false` in your [config](src/config.js).
 
 ## Docker Image
 
