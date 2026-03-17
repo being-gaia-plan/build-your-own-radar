@@ -767,7 +767,7 @@ const Radar = function (size, radar) {
       .classed('disclaimer-text', true)
       .classed('show-disclaimer', true)
       .html(
-        '<b>Note:</b> The official Thoughtworks Technology Radar has updated the name of the outermost ring from “Hold” to “Caution.” The open-source Build Your Own Radar tool will now reflect this change and use the “Caution” label.',
+        '<b>Note:</b> The official Thoughtworks Technology Radar has updated the name of the outermost ring from “Hold” to “Caution”. The open-source Build Your Own Radar tool will now reflect this change and use the “Caution” label.',
       )
   }
   self.plot = function () {
