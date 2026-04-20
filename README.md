@@ -238,7 +238,6 @@ Make sure you have nodejs installed. You can run `nvm use` to use the version us
 To run End to End tests, start the dev server and follow the required steps below:
 
 - To run in headless mode:
-
   - add a new environment variable `TEST_URL` and set it to 'http://localhost:8080'
   - `npm run test:e2e-headless`
 
@@ -255,6 +254,6 @@ To run End to End tests, start the dev server and follow the required steps belo
 
 ### Don't want to install node? Run with one line docker
 
-     $ docker run -p 8080:8080 -v $PWD:/app -w /app -it node:18 /bin/sh -c 'npm install && npm run dev'
+     $ docker run -p 8080:8080 -v $PWD:/app -w /app -it node:24 /bin/sh -c 'npm install && npm run dev'
 
 After building it will start on `localhost:8080`.
