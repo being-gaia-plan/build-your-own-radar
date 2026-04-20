@@ -2,15 +2,13 @@ const { constructSheetUrl, getDocumentOrSheetId, getSheetName } = require('../..
 const queryParams = require('../../src/util/queryParamProcessor')
 
 jest.mock('../../src/util/queryParamProcessor')
-
-function setSearch(query) {
-  window.history.replaceState({}, '', query.startsWith('?') ? query : `?${query}`)
-}
-
 describe('Url Utils', () => {
   it('should construct the sheet url', () => {
     queryParams.mockReturnValue({ documentId: 'documentId' })
-    setSearch('?sheet=radar')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?sheet=radar'
+    window.location.search = '?'
     const sheetUrl = constructSheetUrl('radar')
 
     expect(sheetUrl).toStrictEqual('https://thoughtworks.com/radar?documentId=documentId&sheetName=radar')
@@ -19,7 +17,10 @@ describe('Url Utils', () => {
 
   it('should construct the sheet url if sheetId is used', () => {
     queryParams.mockReturnValue({ sheetId: 'sheetId' })
-    setSearch('?sheet=radar')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?sheet=radar'
+    window.location.search = '?'
     const sheetUrl = constructSheetUrl('radar')
 
     expect(sheetUrl).toStrictEqual('https://thoughtworks.com/radar?sheetId=sheetId&sheetName=radar')
@@ -28,7 +29,10 @@ describe('Url Utils', () => {
 
   it('should prioritize documentId before legacy sheetId', () => {
     queryParams.mockReturnValue({ documentId: 'documentId', sheetId: 'sheetId' })
-    setSearch('?documentId=documentId&sheetId=sheetId')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?documentId=documentId&sheetId=sheetId'
+    window.location.search = '?'
 
     const id = getDocumentOrSheetId()
 
@@ -37,7 +41,10 @@ describe('Url Utils', () => {
 
   it('supports documentId', () => {
     queryParams.mockReturnValue({ documentId: 'documentId' })
-    setSearch('?documentId=documentId')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?documentId=documentId'
+    window.location.search = '?'
 
     const id = getDocumentOrSheetId()
 
@@ -46,7 +53,10 @@ describe('Url Utils', () => {
 
   it('supports sheetId', () => {
     queryParams.mockReturnValue({ sheetId: 'sheetId' })
-    setSearch('?sheetId=sheetId')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?sheetId=sheetId'
+    window.location.search = '?'
 
     const id = getDocumentOrSheetId()
 
@@ -55,7 +65,10 @@ describe('Url Utils', () => {
 
   it('supports sheetName', () => {
     queryParams.mockReturnValue({ sheetName: 'sheetName' })
-    setSearch('?sheetName=sheetName')
+    delete window.location
+    window.location = Object.create(window)
+    window.location.href = 'https://thoughtworks.com/radar?sheetName=sheetName'
+    window.location.search = '?'
 
     const sheetName = getSheetName()
 
